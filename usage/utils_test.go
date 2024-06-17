@@ -18,44 +18,38 @@ package usage
 
 import "testing"
 
-func TestToGigaUnits(t *testing.T) {
+func TestToHumanSize(t *testing.T) {
 	tests := map[string]struct {
-		stringSize    string
-		expectedGsize int64
-		positiveTest  bool
+		stringSize   string
+		expectedSize string
+		positiveTest bool
 	}{
-		"One Hundred Twenty Three thousand Four Hundred Fifty Six Teribytes": {
+		"One Hundred Twenty Three thousand Four Hundred Fifty Six Tebibytes": {
 			"123456 TiB",
-			123456000,
+			"121 PiB",
 			true,
 		},
 		"One Gibibyte": {
 			"1 GiB",
-			1,
+			"1.0 GiB",
 			true,
 		},
 		"One Megabyte": {
 			"1 MB",
-			0, // One cannot express <1GB in integer
+			"977 KiB",
 			true,
-		},
-		"One Megabyte negative-case": {
-			"1 MB",
-			1,
-			false,
-			// 1 MB isn't 1 GB
 		},
 		"One hundred four point five gigabyte": {
 			"104.5 GB",
-			104,
+			"97 GiB",
 			true,
 		},
 	}
 
 	for testKey, testSuite := range tests {
-		gotValue, err := toGigaUnits(testSuite.stringSize)
-		if (gotValue != testSuite.expectedGsize || err != nil) && testSuite.positiveTest {
-			t.Fatalf("Tests failed for %s, expected=%d, got=%d", testKey, testSuite.expectedGsize, gotValue)
+		gotValue, err := toHumanSize(testSuite.stringSize)
+		if (gotValue != testSuite.expectedSize || err != nil) && testSuite.positiveTest {
+			t.Fatalf("Tests failed for %s, expected=%s, got=%s", testKey, testSuite.expectedSize, gotValue)
 		}
 	}
 }

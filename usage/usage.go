@@ -75,8 +75,8 @@ func (u *Usage) SetNodeCount(n string) *Usage {
 
 // SetVolumeCapacity sets the size of a volume.
 func (u *Usage) SetVolumeCapacity(volCapG string) *Usage {
-	s, _ := toGigaUnits(volCapG)
-	u.OpenebsEventBuilder.VolumeCapacity(strconv.FormatInt(s, 10))
+	s, _ := toHumanSize(volCapG)
+	u.OpenebsEventBuilder.VolumeCapacity(s)
 	return u
 }
 

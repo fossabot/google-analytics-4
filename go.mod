@@ -3,7 +3,7 @@ module github.com/openebs/google-analytics-4
 go 1.19
 
 require (
-	github.com/docker/go-units v0.5.0
+	github.com/dustin/go-humanize v1.0.1
 	github.com/openebs/lib-csi v0.8.2
 	k8s.io/apimachinery v0.27.2
 	k8s.io/klog/v2 v2.100.1
