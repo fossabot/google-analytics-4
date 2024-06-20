@@ -36,16 +36,23 @@ const (
 )
 
 // PingCheck sends ping events to Google Analytics
-func PingCheck(engineName, category string) {
+func PingCheck(engineName, category string, pingImmediately bool) {
 	// Create a new usage field
 	u := New()
+	pingSender := u.CommonBuild(engineName).
+		InstallBuilder(true).
+		SetCategory(category)
+
+	if pingImmediately {
+		// Ping immediately.
+		pingSender.Send()
+	}
+
 	duration := getPingPeriod()
 	ticker := time.NewTicker(duration)
 	for range ticker.C {
-		u.CommonBuild(engineName).
-			InstallBuilder(true).
-			SetCategory(category).
-			Send()
+		// Ping periodically, starting at 'duration'.
+		pingSender.Send()
 	}
 }
 

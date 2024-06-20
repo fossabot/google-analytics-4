@@ -53,9 +53,7 @@ Create a new `client` and `Send()` an 'event'.
                 VolumeName("pvc-b3968e30-9020-4011-943a-7ab338d5f19f").
                 VolumeClaimName("openebs-lvmpv").
                 Category("volume-deprovision").
-                Action("replica:2").
-                Label("Capacity").
-                Value("2Gi").
+                NodeCount("3").
                 Build()
 
             err = client.Send(event)

@@ -16,12 +16,12 @@ limitations under the License.
 
 package usage
 
-import "github.com/docker/go-units"
+import (
+	"github.com/dustin/go-humanize"
+)
 
-// toGigaUnits converts a size from xB to bytes where x={k,m,g,t,p...}
-// and return the number of Gigabytes as an integer
-// 1 gigabyte=1000 megabyte
-func toGigaUnits(size string) (int64, error) {
-	sizeInBytes, err := units.FromHumanSize(size)
-	return sizeInBytes / units.GB, err
+// toHumanSize converts sizes to legible human sizes in IEC units.
+func toHumanSize(size string) (string, error) {
+	sizeInBytes, err := humanize.ParseBigBytes(size)
+	return humanize.BigIBytes(sizeInBytes), err
 }

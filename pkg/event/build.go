@@ -44,12 +44,12 @@ type OpenebsEvent struct {
 	VolumeClaimName string `json:"vol_claim_name"`
 	// Category of event, i.e install, volume-provision
 	Category string `json:"event_category"`
-	// Action of the event, i.e running, replica:1
-	Action string `json:"event_action"`
-	// Label for the event, i.e nodes, capacity
-	Label string `json:"event_label"`
-	// Value for the label, i.e 4, 2
-	Value string `json:"event_value"`
+	// NodeCount is the number of kubernetes nodes in the cluster.
+	NodeCount string `json:"node_count"`
+	// VolumeCapacity is the size of a volume.
+	VolumeCapacity string `json:"vol_capacity,omitempty"`
+	// ReplicaCount is the number of replicas attached to a volume.
+	ReplicaCount string `json:"vol_replica_count,omitempty"`
 }
 
 // OpenebsEventBuilder is builder for OpenebsEvent
@@ -123,18 +123,18 @@ func (b *OpenebsEventBuilder) Category(category string) *OpenebsEventBuilder {
 	return b
 }
 
-func (b *OpenebsEventBuilder) Action(action string) *OpenebsEventBuilder {
-	b.openebsEvent.Action = action
+func (b *OpenebsEventBuilder) NodeCount(nodeCount string) *OpenebsEventBuilder {
+	b.openebsEvent.NodeCount = nodeCount
 	return b
 }
 
-func (b *OpenebsEventBuilder) Label(label string) *OpenebsEventBuilder {
-	b.openebsEvent.Label = label
+func (b *OpenebsEventBuilder) ReplicaCount(replicaCount string) *OpenebsEventBuilder {
+	b.openebsEvent.ReplicaCount = replicaCount
 	return b
 }
 
-func (b *OpenebsEventBuilder) Value(value string) *OpenebsEventBuilder {
-	b.openebsEvent.Value = value
+func (b *OpenebsEventBuilder) VolumeCapacity(capacity string) *OpenebsEventBuilder {
+	b.openebsEvent.VolumeCapacity = capacity
 	return b
 }
 

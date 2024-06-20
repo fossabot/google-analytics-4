@@ -19,11 +19,11 @@ package usage
 import (
 	"strconv"
 
-	k8sapi "github.com/openebs/lib-csi/pkg/client/k8s"
 	"k8s.io/klog/v2"
 
 	ga4Client "github.com/openebs/google-analytics-4/pkg/client"
 	ga4Event "github.com/openebs/google-analytics-4/pkg/event"
+	k8sapi "github.com/openebs/lib-csi/pkg/client/k8s"
 )
 
 // Usage struct represents all information about a usage metric sent to
@@ -67,44 +67,22 @@ func (u *Usage) SetCategory(c string) *Usage {
 	return u
 }
 
-// SetAction sets the action of an event
-func (u *Usage) SetAction(a string) *Usage {
-	u.OpenebsEventBuilder.Action(a)
+// SetNodeCount sets the node count for a k8s cluster.
+func (u *Usage) SetNodeCount(n string) *Usage {
+	u.OpenebsEventBuilder.NodeCount(n)
 	return u
 }
 
-// SetLabel sets the label for an event
-func (u *Usage) SetLabel(l string) *Usage {
-	u.OpenebsEventBuilder.Label(l)
-	return u
-}
-
-// SetValue sets the value for an event's label
-func (u *Usage) SetValue(v string) *Usage {
-	u.OpenebsEventBuilder.Value(v)
-	return u
-}
-
-// SetVolumeCapacity sets the storage capacity of the volume for a volume event
+// SetVolumeCapacity sets the size of a volume.
 func (u *Usage) SetVolumeCapacity(volCapG string) *Usage {
-	s, _ := toGigaUnits(volCapG)
-	u.SetValue(strconv.FormatInt(s, 10))
+	s, _ := toHumanSize(volCapG)
+	u.OpenebsEventBuilder.VolumeCapacity(s)
 	return u
 }
 
-// SetReplicaCount Wrapper for setting replica count for volume events
-// NOTE: This doesn't get the replica count in a volume de-provision event.
-// TODO: Pick the current value of replica-count from the CAS-engine
-func (u *Usage) SetReplicaCount(count, method string) *Usage {
-	if method == VolumeProvision && count == "" {
-		// Case: When volume-provision the replica count isn't specified
-		// it is set to three by default by the m-apiserver
-		u.OpenebsEventBuilder.Action(DefaultReplicaCount)
-	} else {
-		// Catch all case for volume-deprovision event and
-		// volume-provision event with an overridden replica-count
-		u.OpenebsEventBuilder.Action(Replica + count)
-	}
+// SetReplicaCount sets the number of replicas for a volume.
+func (u *Usage) SetReplicaCount(replicaCount string) *Usage {
+	u.OpenebsEventBuilder.ReplicaCount(replicaCount)
 	return u
 }
 
@@ -149,9 +127,7 @@ func (u *Usage) InstallBuilder(override bool) *Usage {
 	u.OpenebsEventBuilder.
 		K8sDefaultNsUid(v.id).
 		Category(InstallEvent).
-		Action(RunningStatus).
-		Label(EventLabelNode).
-		Value(strconv.Itoa(clusterSize))
+		NodeCount(strconv.Itoa(clusterSize))
 
 	return u
 }

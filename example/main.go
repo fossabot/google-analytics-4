@@ -30,9 +30,9 @@ func main() {
 		VolumeName("pvc-b3968e30-9020-4011-943a-7ab338d5f19f").
 		VolumeClaimName("openebs-lvmpv").
 		Category("volume_deprovision").
-		Action("replica").
-		Label("Capacity").
-		Value("2").
+		NodeCount("2").
+		VolumeCapacity("19238457924875977657").
+		ReplicaCount("1000").
 		Build()
 
 	err = client.Send(event)
