@@ -77,4 +77,8 @@ Create a new `client` and `Send()` an 'event'.
 
 5. Watch as your event appears
 
-	![foo-ga](https://cloud.githubusercontent.com/assets/633843/5979585/023fc580-a8fd-11e4-803a-956610bcc2e2.png)
+	![foo-ga](https://cloud.githubusercontent.com/assets/633843/5979585/023fc580-a8fd-11e4-803a-956610bcc2e2.png)[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fopenebs%2Fgoogle-analytics-4.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fopenebs%2Fgoogle-analytics-4?ref=badge_shield)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fopenebs%2Fgoogle-analytics-4.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fopenebs%2Fgoogle-analytics-4?ref=badge_large)
